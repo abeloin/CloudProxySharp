@@ -1,12 +1,15 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace FlareSolverrSharp.Types
+namespace CloudProxySharp.Types
 {
-    public class FlareSolverrRequest
+    public class CloudProxyRequest
     {
         [JsonProperty("method")]
         public string Method;
+
+        [JsonProperty("cmd")]
+        public string Cmd;
 
         [JsonProperty("url")]
         public string Url;

@@ -3,32 +3,32 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using FlareSolverrSharp.Exceptions;
-using FlareSolverrSharp.Types;
-using FlareSolverrSharp.Utilities;
+using CloudProxySharp.Exceptions;
+using CloudProxySharp.Types;
+using CloudProxySharp.Utilities;
 using Newtonsoft.Json;
 
-namespace FlareSolverrSharp.Solvers
+namespace CloudProxySharp.Solvers
 {
-    public class FlareSolverr
+    public class CloudProxy
     {
         private static readonly SemaphoreLocker Locker = new SemaphoreLocker();
         private HttpClient _httpClient;
-        private readonly Uri _flareSolverrUri;
+        private readonly Uri _cloudProxyUri;
 
         public int MaxTimeout = 60000;
 
-        public FlareSolverr(string flareSolverrApiUrl)
+        public CloudProxy(string cloudProxyApiUrl)
         {
-            var apiUrl = flareSolverrApiUrl;
+            var apiUrl = cloudProxyApiUrl;
             if (!apiUrl.EndsWith("/"))
                 apiUrl += "/";
-            _flareSolverrUri = new Uri(apiUrl + "v1");
+            _cloudProxyUri = new Uri(apiUrl + "v1");
         }
 
-        public async Task<FlareSolverrResponse> Solve(HttpRequestMessage request)
+        public async Task<CloudProxyResponse> Solve(HttpRequestMessage request)
         {
-            FlareSolverrResponse result = null;
+            CloudProxyResponse result = null;
 
             await Locker.LockAsync(async () =>
             {
@@ -36,15 +36,15 @@ namespace FlareSolverrSharp.Solvers
                 try
                 {
                     _httpClient = new HttpClient();
-                    response = await _httpClient.PostAsync(_flareSolverrUri, GenerateFlareSolverrRequest(request));
+                    response = await _httpClient.PostAsync(_cloudProxyUri, GenerateCloudProxyRequest(request));
                 }
                 catch (HttpRequestException e)
                 {
-                    throw new FlareSolverrException("Error connecting to FlareSolverr server: " + e);
+                    throw new CloudProxyException("Error connecting to CloudProxy server: " + e);
                 }
                 catch (Exception e)
                 {
-                    throw new FlareSolverrException(e.ToString());
+                    throw new CloudProxyException(e.ToString());
                 }
                 finally
                 {
@@ -54,25 +54,26 @@ namespace FlareSolverrSharp.Solvers
                 var resContent = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    result = JsonConvert.DeserializeObject<FlareSolverrResponse>(resContent);
+                    result = JsonConvert.DeserializeObject<CloudProxyResponse>(resContent);
                 }
                 catch (Exception)
                 {
-                    throw new FlareSolverrException("Error parsing response, check FlareSolverr version. Response: " + resContent);
+                    throw new CloudProxyException("Error parsing response, check CloudProxy version. Response: " + resContent);
                 }
 
                 if (response.StatusCode != HttpStatusCode.OK)
-                    throw new FlareSolverrException(result.Message);
+                    throw new CloudProxyException(result.Message);
             });
 
             return result;
         }
 
-        private HttpContent GenerateFlareSolverrRequest(HttpRequestMessage request)
+        private HttpContent GenerateCloudProxyRequest(HttpRequestMessage request)
         {
-            var req = new FlareSolverrRequest
+            var req = new CloudProxyRequest
             {
-                Method = "GET",
+                // Method = "GET",
+                Cmd = "request.get",
                 Url = request.RequestUri.ToString(),
                 MaxTimeout = MaxTimeout
             };

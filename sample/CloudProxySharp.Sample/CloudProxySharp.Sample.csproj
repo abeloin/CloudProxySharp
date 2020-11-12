@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>CloudProxySharp.Sample</RootNamespace>
+    <AssemblyName>CloudProxySharp.Sample</AssemblyName>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CloudProxySharp\CloudProxySharp.csproj" />
+  </ItemGroup>
+
+</Project>
