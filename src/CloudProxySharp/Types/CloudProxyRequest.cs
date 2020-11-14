@@ -5,9 +5,6 @@ namespace CloudProxySharp.Types
 {
     public class CloudProxyRequest
     {
-        [JsonProperty("method")]
-        public string Method;
-
         [JsonProperty("cmd")]
         public string Cmd;
 
@@ -16,8 +13,5 @@ namespace CloudProxySharp.Types
 
         [JsonProperty("userAgent")]
         public string UserAgent;
-
-        [JsonProperty("maxTimeout")]
-        public int MaxTimeout;
     }
 }

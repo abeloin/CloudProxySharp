@@ -70,13 +70,25 @@ namespace CloudProxySharp.Solvers
 
         private HttpContent GenerateCloudProxyRequest(HttpRequestMessage request)
         {
-            var req = new CloudProxyRequest
+            CloudProxyRequest req;
+
+            if (request.Method == HttpMethod.Get)
             {
-                // Method = "GET",
-                Cmd = "request.get",
-                Url = request.RequestUri.ToString(),
-                MaxTimeout = MaxTimeout
-            };
+                req = new CloudProxyRequestGet
+                {
+                    Cmd = "request.get",
+                    Url = request.RequestUri.ToString(),
+                    MaxTimeout = MaxTimeout
+                };
+            }
+            else if (request.Method == HttpMethod.Post)
+            {
+                throw new CloudProxyException("Not currently implemented HttpMethod: POST");
+            }
+            else
+            {
+                throw new CloudProxyException("Unsupported HttpMethod: " + request.Method.ToString());
+            }
 
             var userAgent = request.Headers.UserAgent.ToString();
             if (!string.IsNullOrWhiteSpace(userAgent))
