@@ -1,9 +1,9 @@
 ﻿
 // ReSharper disable UnassignedField.Global
 // ReSharper disable ClassNeverInstantiated.Global
-namespace CloudProxySharp.Types
+namespace YetAnotherCloudProxySharp.Types
 {
-    public class CloudProxyResponse
+    public class YetAnotherCloudProxyResponse
     {
         public string Status;
         public string Message;

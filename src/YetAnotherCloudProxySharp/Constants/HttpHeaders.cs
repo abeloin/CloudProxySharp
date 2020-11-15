@@ -1,4 +1,4 @@
-﻿namespace CloudProxySharp.Constants
+﻿namespace YetAnotherCloudProxySharp.Constants
 {
     public static class HttpHeaders
     {

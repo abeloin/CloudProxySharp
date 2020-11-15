@@ -2,10 +2,10 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using CloudProxySharp.Exceptions;
+using YetAnotherCloudProxySharp.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CloudProxySharp.Tests
+namespace YetAnotherCloudProxySharp.Tests
 {
     [TestClass]
     public class ClearanceHandlerTests
@@ -16,7 +16,7 @@ namespace CloudProxySharp.Tests
         public async Task SolveOk()
         {
             var uri = new Uri("https://www.google.com/");
-            var handler = new ClearanceHandler(Settings.CloudProxyApiUrl)
+            var handler = new ClearanceHandler(Settings.YetAnotherCloudProxyApiUrl)
             {
                 UserAgent = null,
                 MaxTimeout = 60000
@@ -30,7 +30,7 @@ namespace CloudProxySharp.Tests
         [TestMethod]
         public async Task SolveOkCloudflare()
         {
-            var handler = new ClearanceHandler(Settings.CloudProxyApiUrl)
+            var handler = new ClearanceHandler(Settings.YetAnotherCloudProxyApiUrl)
             {
                 UserAgent = "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0",
                 MaxTimeout = 60000
@@ -45,7 +45,7 @@ namespace CloudProxySharp.Tests
         public async Task SolveError()
         {
             var uri = new Uri("https://www.google.bad1/");
-            var handler = new ClearanceHandler(Settings.CloudProxyApiUrl)
+            var handler = new ClearanceHandler(Settings.YetAnotherCloudProxyApiUrl)
             {
                 UserAgent = null,
                 MaxTimeout = 60000
@@ -82,9 +82,9 @@ namespace CloudProxySharp.Tests
                 await client.GetAsync(_protectedUri);
                 Assert.Fail("Exception not thrown");
             }
-            catch (CloudProxyException e)
+            catch (YetAnotherCloudProxyException e)
             {
-                Assert.IsTrue(e.Message.Contains("Error connecting to CloudProxy server"));
+                Assert.IsTrue(e.Message.Contains("Error connecting to YetAnotherCloudProxy server"));
             }
             catch (Exception e)
             {
@@ -107,9 +107,9 @@ namespace CloudProxySharp.Tests
                 await client.GetAsync(_protectedUri);
                 Assert.Fail("Exception not thrown");
             }
-            catch (CloudProxyException e)
+            catch (YetAnotherCloudProxyException e)
             {
-                Assert.IsTrue(e.Message.Contains("Challenge detected but CloudProxy is not configured"));
+                Assert.IsTrue(e.Message.Contains("Challenge detected but YetAnotherCloudProxy is not configured"));
             }
             catch (Exception e)
             {

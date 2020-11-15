@@ -1,9 +1,9 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace CloudProxySharp.Types
+namespace YetAnotherCloudProxySharp.Types
 {
-    public class CloudProxyRequestPost : CloudProxyRequest
+    public class YetAnotherCloudProxyRequestPost : YetAnotherCloudProxyRequest
     {
         [JsonProperty("headers")]
         public string Headers;

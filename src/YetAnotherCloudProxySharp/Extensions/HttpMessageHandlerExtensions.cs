@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace CloudProxySharp.Extensions
+namespace YetAnotherCloudProxySharp.Extensions
 {
     internal static class HttpMessageHandlerExtensions
     {

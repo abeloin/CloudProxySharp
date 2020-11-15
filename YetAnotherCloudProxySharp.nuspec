@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>YetAnotherCloudProxySharp</id>
+    <version>1.0.2</version>
+    <authors>Alexandre Beloin (abeloin)</authors>
+    <owners>Alexandre Beloin (abeloin)</owners>
+    <description>YetAnotherCloudProxy .Net / Proxy server to bypass Cloudflare protection.</description>
+    <tags>YetAnotherCloudProxy, flaresolverr, flaresolver, cloudflare, solver, bypass, protection, solving, library, cloudflaresolver, delegatinghandler, recaptcha, captcha, javascript, challenge, utilities</tags>
+    <repository url="https://github.com/abeloin/YetAnotherCloudProxySharp" />
+    <projectUrl>https://github.com/abeloin/YetAnotherCloudProxySharp</projectUrl>
+    <licenseUrl>https://github.com/abeloin/YetAnotherCloudProxySharp/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+  </metadata>
+  <files>
+    <file src="src/YetAnotherCloudProxySharp/bin/Release/netstandard1.3/YetAnotherCloudProxySharp.dll" target="lib/netstandard1.3"/>
+  </files>
+</package>

@@ -1,8 +1,8 @@
-CloudProxySharp
+YetAnotherCloudProxySharp
 ==================
-[![NuGet](https://img.shields.io/nuget/v/CloudProxySharp.svg?maxAge=60)](https://www.nuget.org/packages/CloudProxySharp)
+[![NuGet](https://img.shields.io/nuget/v/YetAnotherCloudProxySharp.svg?maxAge=60)](https://www.nuget.org/packages/YetAnotherCloudProxySharp)
 
-CloudProxy .Net DelegatingHandler / interceptor. (Originally was FlareSolverrSharp and modified to work with CloudProxy)
+YetAnotherCloudProxy .Net DelegatingHandler / interceptor. (Originally was FlareSolverrSharp and modified to work with CloudProxy)
 
 [CloudProxy](https://github.com/abeloin/CloudProxy) is a proxy server to bypass Cloudflare protection.
 
@@ -11,7 +11,7 @@ CloudProxy .Net DelegatingHandler / interceptor. (Originally was FlareSolverrSha
 # Installation
 Full-Featured library:
 
-`PM> Install-Package CloudProxy`
+`PM> Install-Package YetAnotherCloudProxySharp`
 
 # Dependencies
 - [.NET Standard 1.3](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.3.md)
@@ -45,17 +45,17 @@ var content = await client.GetStringAsync("https://uam.hitmehard.fun/HIT");
 Console.WriteLine(content);
 ```
 
-**Full example [here](https://github.com/abeloin/CloudProxySharp/tree/master/sample/CloudProxySharp.Sample)**
+**Full example [here](https://github.com/abeloin/YetAnotherCloudProxySharp/tree/master/sample/YetAnotherCloudProxySharp.Sample)**
 
 # Options
-### CloudProxy Service API
-You have to set the CloudProxy service API in the ClearanceHandler constructor. If you set an empty or null endpoint,
-CloudProxySharp will be able to detect challenges, but it will not be able to solve them.
+### YetAnotherCloudProxy Service API
+You have to set the YetAnotherCloudProxy service API in the ClearanceHandler constructor. If you set an empty or null endpoint,
+YetAnotherCloudProxySharp will be able to detect challenges, but it will not be able to solve them.
 
 Example: http://localhost:8191/
 
 ### UserAgent
-The User-Agent which will be used across this session. If you didn't set it, the default CloudProxy User-Agent will be used.
+The User-Agent which will be used across this session. If you didn't set it, the default YetAnotherCloudProxy User-Agent will be used.
 
 **User-Agent must be the same as the one used to solve the challenge, otherwise Cloudflare will flag you as a bot.**
 

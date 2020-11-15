@@ -1,9 +1,9 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace CloudProxySharp.Types
+namespace YetAnotherCloudProxySharp.Types
 {
-    public class CloudProxyRequest
+    public class YetAnotherCloudProxyRequest
     {
         [JsonProperty("cmd")]
         public string Cmd;

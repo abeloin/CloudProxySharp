@@ -3,14 +3,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CloudProxySharp.Constants;
-using CloudProxySharp.Exceptions;
-using CloudProxySharp.Extensions;
-using CloudProxySharp.Solvers;
-using CloudProxySharp.Types;
+using YetAnotherCloudProxySharp.Constants;
+using YetAnotherCloudProxySharp.Exceptions;
+using YetAnotherCloudProxySharp.Extensions;
+using YetAnotherCloudProxySharp.Solvers;
+using YetAnotherCloudProxySharp.Types;
 using Cookie = System.Net.Cookie;
 
-namespace CloudProxySharp
+namespace YetAnotherCloudProxySharp
 {
     /// <summary>
     /// A HTTP handler that transparently manages Cloudflare's protection bypass.
@@ -18,10 +18,10 @@ namespace CloudProxySharp
     public class ClearanceHandler : DelegatingHandler
     {
         private readonly HttpClient _client;
-        private readonly CloudProxy _cloudProxy;
+        private readonly YetAnotherCloudProxy _YetAnotherCloudProxy;
 
         /// <summary>
-        /// The User-Agent which will be used accross this session (null means default CloudProxy User-Agent).
+        /// The User-Agent which will be used accross this session (null means default YetAnotherCloudProxy User-Agent).
         /// </summary>
         public string UserAgent = null;
 
@@ -35,9 +35,9 @@ namespace CloudProxySharp
         /// <summary>
         /// Creates a new instance of the <see cref="ClearanceHandler"/>.
         /// </summary>
-        /// <param name="cloudProxyApiUrl">CloudProxy API URL. If null or empty it will detect the challenges, but
+        /// <param name="YetAnotherCloudProxyApiUrl">YetAnotherCloudProxy API URL. If null or empty it will detect the challenges, but
         /// they will not be solved. Example: "http://localhost:8191/"</param>
-        public ClearanceHandler(string cloudProxyApiUrl)
+        public ClearanceHandler(string YetAnotherCloudProxyApiUrl)
             : base(new HttpClientHandler())
         {
             _client = new HttpClient(new HttpClientHandler
@@ -47,9 +47,9 @@ namespace CloudProxySharp
                 CookieContainer = new CookieContainer()
             });
 
-            if (!string.IsNullOrWhiteSpace(cloudProxyApiUrl))
+            if (!string.IsNullOrWhiteSpace(YetAnotherCloudProxyApiUrl))
             {
-                _cloudProxy = new CloudProxy(cloudProxyApiUrl)
+                _YetAnotherCloudProxy = new YetAnotherCloudProxy(YetAnotherCloudProxyApiUrl)
                 {
                     MaxTimeout = MaxTimeout
                 };
@@ -73,22 +73,22 @@ namespace CloudProxySharp
             // Detect if there is a challenge in the response
             if (ChallengeDetector.IsClearanceRequired(response))
             {
-                if (_cloudProxy == null)
-                    throw new CloudProxyException("Challenge detected but CloudProxy is not configured");
+                if (_YetAnotherCloudProxy == null)
+                    throw new YetAnotherCloudProxyException("Challenge detected but YetAnotherCloudProxy is not configured");
 
-                // Resolve the challenge using CloudProxy API
-                var cloudProxyResponse = await _cloudProxy.Solve(request);
+                // Resolve the challenge using YetAnotherCloudProxy API
+                var YetAnotherCloudProxyResponse = await _YetAnotherCloudProxy.Solve(request);
 
-                // Change the cookies in the original request with the cookies provided by CloudProxy
-                InjectCookies(request, cloudProxyResponse);
+                // Change the cookies in the original request with the cookies provided by YetAnotherCloudProxy
+                InjectCookies(request, YetAnotherCloudProxyResponse);
                 response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
                 // Detect if there is a challenge in the response
                 if (ChallengeDetector.IsClearanceRequired(response))
-                    throw new CloudProxyException("The cookies provided by CloudProxy are not valid");
+                    throw new YetAnotherCloudProxyException("The cookies provided by YetAnotherCloudProxy are not valid");
 
-                // Add the "Set-Cookie" header in the response with the cookies provided by CloudProxy
-                InjectSetCookieHeader(response, cloudProxyResponse);
+                // Add the "Set-Cookie" header in the response with the cookies provided by YetAnotherCloudProxy
+                InjectSetCookieHeader(response, YetAnotherCloudProxyResponse);
             }
 
             return response;
@@ -104,9 +104,9 @@ namespace CloudProxySharp
             request.Headers.Add(HttpHeaders.UserAgent, UserAgent);
         }
 
-        private void InjectCookies(HttpRequestMessage request, CloudProxyResponse cloudProxyResponse)
+        private void InjectCookies(HttpRequestMessage request, YetAnotherCloudProxyResponse YetAnotherCloudProxyResponse)
         {
-            var rCookies = cloudProxyResponse.Solution.Cookies;
+            var rCookies = YetAnotherCloudProxyResponse.Solution.Cookies;
             if (!rCookies.Any())
                 return;
             var rCookiesList = rCookies.Select(x => x.Name).ToList();
@@ -127,9 +127,9 @@ namespace CloudProxySharp
             }
         }
 
-        private void InjectSetCookieHeader(HttpResponseMessage response, CloudProxyResponse cloudProxyResponse)
+        private void InjectSetCookieHeader(HttpResponseMessage response, YetAnotherCloudProxyResponse YetAnotherCloudProxyResponse)
         {
-            var rCookies = cloudProxyResponse.Solution.Cookies;
+            var rCookies = YetAnotherCloudProxyResponse.Solution.Cookies;
             if (!rCookies.Any())
                 return;
 

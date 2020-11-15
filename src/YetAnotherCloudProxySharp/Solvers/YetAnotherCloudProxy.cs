@@ -3,32 +3,32 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using CloudProxySharp.Exceptions;
-using CloudProxySharp.Types;
-using CloudProxySharp.Utilities;
+using YetAnotherCloudProxySharp.Exceptions;
+using YetAnotherCloudProxySharp.Types;
+using YetAnotherCloudProxySharp.Utilities;
 using Newtonsoft.Json;
 
-namespace CloudProxySharp.Solvers
+namespace YetAnotherCloudProxySharp.Solvers
 {
-    public class CloudProxy
+    public class YetAnotherCloudProxy
     {
         private static readonly SemaphoreLocker Locker = new SemaphoreLocker();
         private HttpClient _httpClient;
-        private readonly Uri _cloudProxyUri;
+        private readonly Uri _YetAnotherCloudProxyUri;
 
         public int MaxTimeout = 60000;
 
-        public CloudProxy(string cloudProxyApiUrl)
+        public YetAnotherCloudProxy(string YetAnotherCloudProxyApiUrl)
         {
-            var apiUrl = cloudProxyApiUrl;
+            var apiUrl = YetAnotherCloudProxyApiUrl;
             if (!apiUrl.EndsWith("/"))
                 apiUrl += "/";
-            _cloudProxyUri = new Uri(apiUrl + "v1");
+            _YetAnotherCloudProxyUri = new Uri(apiUrl + "v1");
         }
 
-        public async Task<CloudProxyResponse> Solve(HttpRequestMessage request)
+        public async Task<YetAnotherCloudProxyResponse> Solve(HttpRequestMessage request)
         {
-            CloudProxyResponse result = null;
+            YetAnotherCloudProxyResponse result = null;
 
             await Locker.LockAsync(async () =>
             {
@@ -36,15 +36,15 @@ namespace CloudProxySharp.Solvers
                 try
                 {
                     _httpClient = new HttpClient();
-                    response = await _httpClient.PostAsync(_cloudProxyUri, GenerateCloudProxyRequest(request));
+                    response = await _httpClient.PostAsync(_YetAnotherCloudProxyUri, GenerateYetAnotherCloudProxyRequest(request));
                 }
                 catch (HttpRequestException e)
                 {
-                    throw new CloudProxyException("Error connecting to CloudProxy server: " + e);
+                    throw new YetAnotherCloudProxyException("Error connecting to YetAnotherCloudProxy server: " + e);
                 }
                 catch (Exception e)
                 {
-                    throw new CloudProxyException(e.ToString());
+                    throw new YetAnotherCloudProxyException(e.ToString());
                 }
                 finally
                 {
@@ -54,27 +54,27 @@ namespace CloudProxySharp.Solvers
                 var resContent = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    result = JsonConvert.DeserializeObject<CloudProxyResponse>(resContent);
+                    result = JsonConvert.DeserializeObject<YetAnotherCloudProxyResponse>(resContent);
                 }
                 catch (Exception)
                 {
-                    throw new CloudProxyException("Error parsing response, check CloudProxy version. Response: " + resContent);
+                    throw new YetAnotherCloudProxyException("Error parsing response, check YetAnotherCloudProxy version. Response: " + resContent);
                 }
 
                 if (response.StatusCode != HttpStatusCode.OK)
-                    throw new CloudProxyException(result.Message);
+                    throw new YetAnotherCloudProxyException(result.Message);
             });
 
             return result;
         }
 
-        private HttpContent GenerateCloudProxyRequest(HttpRequestMessage request)
+        private HttpContent GenerateYetAnotherCloudProxyRequest(HttpRequestMessage request)
         {
-            CloudProxyRequest req;
+            YetAnotherCloudProxyRequest req;
 
             if (request.Method == HttpMethod.Get)
             {
-                req = new CloudProxyRequestGet
+                req = new YetAnotherCloudProxyRequestGet
                 {
                     Cmd = "request.get",
                     Url = request.RequestUri.ToString(),
@@ -83,11 +83,11 @@ namespace CloudProxySharp.Solvers
             }
             else if (request.Method == HttpMethod.Post)
             {
-                throw new CloudProxyException("Not currently implemented HttpMethod: POST");
+                throw new YetAnotherCloudProxyException("Not currently implemented HttpMethod: POST");
             }
             else
             {
-                throw new CloudProxyException("Unsupported HttpMethod: " + request.Method.ToString());
+                throw new YetAnotherCloudProxyException("Unsupported HttpMethod: " + request.Method.ToString());
             }
 
             var userAgent = request.Headers.UserAgent.ToString();

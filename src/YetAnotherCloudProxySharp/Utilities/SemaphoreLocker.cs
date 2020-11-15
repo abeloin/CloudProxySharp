@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CloudProxySharp.Utilities
+namespace YetAnotherCloudProxySharp.Utilities
 {
     public class SemaphoreLocker
     {

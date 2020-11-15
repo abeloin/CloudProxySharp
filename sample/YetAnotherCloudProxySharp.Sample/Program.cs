@@ -1,5 +1,5 @@
 ﻿
-namespace CloudProxySharp.Sample
+namespace YetAnotherCloudProxySharp.Sample
 {
     static class Program
     {
