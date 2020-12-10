@@ -40,15 +40,21 @@ namespace YetAnotherCloudProxySharp.Solvers
                 }
                 catch (HttpRequestException e)
                 {
-                    throw new YetAnotherCloudProxyException("Error connecting to YetAnotherCloudProxy server: " + e);
+                    throw new YetAnotherCloudProxyException("Error connecting to CloudProxy server: " + e);
                 }
                 catch (Exception e)
                 {
-                    throw new YetAnotherCloudProxyException(e.ToString());
+                    throw new YetAnotherCloudProxyException("Exception: " + e.ToString());
                 }
                 finally
                 {
                     _httpClient.Dispose();
+                }
+
+                // Don't try parsing if CloudProxy hasn't resturned 200 or 500
+                if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.InternalServerError)
+                {
+                    throw new YetAnotherCloudProxyException("HTTP StatusCode not 200 or 500. Status is :" + response.StatusCode);
                 }
 
                 var resContent = await response.Content.ReadAsStringAsync();
@@ -58,11 +64,40 @@ namespace YetAnotherCloudProxySharp.Solvers
                 }
                 catch (Exception)
                 {
-                    throw new YetAnotherCloudProxyException("Error parsing response, check YetAnotherCloudProxy version. Response: " + resContent);
+                    throw new YetAnotherCloudProxyException("Error parsing response, check CloudProxy. Response: " + resContent);
                 }
 
-                if (response.StatusCode != HttpStatusCode.OK)
-                    throw new YetAnotherCloudProxyException(result.Message);
+                    try
+                {
+                    Enum.TryParse(result.Status, true, out CloudProxyStatusCode returnStatusCode);
+
+                    if (returnStatusCode.Equals(CloudProxyStatusCode.ok))
+                    {
+                        return result;
+                    }
+                    else if (returnStatusCode.Equals(CloudProxyStatusCode.warning))
+                    {
+                        throw new YetAnotherCloudProxyException(
+                            "CloudProxy was able to process the request, but a captcha was detected. Message: "
+                            + result.Message);
+                    }
+                    else if (returnStatusCode.Equals(CloudProxyStatusCode.error))
+                    {
+                        throw new YetAnotherCloudProxyException(
+                            "CloudProxy was unable to process the request, please check CloudProxy's logs. Message: "
+                            + result.Message);
+                    }
+                    else
+                    {
+                        throw new YetAnotherCloudProxyException("Unable to map CloudProxy returned status code, received code: "
+                            + result.Status + ". Message: " + result.Message);
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    throw new YetAnotherCloudProxyException("Error parsing status code, check CloudProxy log. Status: "
+                            + result.Status + ". Message: " + result.Message);
+                }
             });
 
             return result;

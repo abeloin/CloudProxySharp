@@ -32,7 +32,7 @@ namespace YetAnotherCloudProxySharp.Tests
         {
             var handler = new ClearanceHandler(Settings.YetAnotherCloudProxyApiUrl)
             {
-                UserAgent = "Mozilla/5.0 (X11; Linux i686; rv:77.0) Gecko/20100101 Firefox/77.0",
+                UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36",
                 MaxTimeout = 60000
             };
 

@@ -24,12 +24,12 @@ namespace YetAnotherCloudProxySharp.Tests
             Assert.AreEqual("", YetAnotherCloudProxyResponse.Message);
             Assert.IsTrue(YetAnotherCloudProxyResponse.StartTimestamp > 0);
             Assert.IsTrue(YetAnotherCloudProxyResponse.EndTimestamp > YetAnotherCloudProxyResponse.StartTimestamp);
-            Assert.AreEqual("1.0.0", YetAnotherCloudProxyResponse.Version);
+            Assert.AreEqual("1.0.3", YetAnotherCloudProxyResponse.Version);
 
             Assert.AreEqual("https://www.google.com/", YetAnotherCloudProxyResponse.Solution.Url);
             Assert.IsTrue(YetAnotherCloudProxyResponse.Solution.Response.Contains("<title>Google</title>"));
             Assert.IsTrue(YetAnotherCloudProxyResponse.Solution.Cookies.Any());
-            Assert.IsTrue(YetAnotherCloudProxyResponse.Solution.UserAgent.Contains(" Firefox/"));
+            Assert.IsTrue(YetAnotherCloudProxyResponse.Solution.UserAgent.Contains(" Chrome/"));
 
             var firstCookie = YetAnotherCloudProxyResponse.Solution.Cookies.First();
             Assert.IsTrue(!string.IsNullOrWhiteSpace(firstCookie.Name));

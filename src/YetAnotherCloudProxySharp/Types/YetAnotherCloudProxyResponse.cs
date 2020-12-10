@@ -1,4 +1,5 @@
-﻿
+﻿using Newtonsoft.Json;
+
 // ReSharper disable UnassignedField.Global
 // ReSharper disable ClassNeverInstantiated.Global
 namespace YetAnotherCloudProxySharp.Types
@@ -16,6 +17,8 @@ namespace YetAnotherCloudProxySharp.Types
     public class Solution
     {
         public string Url;
+        public string Status;
+        public Headers Headers;
         public string Response;
         public Cookie[] Cookies;
         public string UserAgent;
@@ -37,5 +40,13 @@ namespace YetAnotherCloudProxySharp.Types
         public string ToHeaderValue() => $"{Name}={Value}";
         public System.Net.Cookie ToCookieObj() => new System.Net.Cookie(Name, Value);
 
+    }
+
+    public class Headers
+    {
+        public string Status;
+        public string Date;
+        [JsonProperty(PropertyName = "content-type")]
+        public string ContentType;
     }
 }

@@ -4,9 +4,9 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <PackageId>YetAnotherCloudProxySharp</PackageId>
     <RootNamespace>YetAnotherCloudProxySharp</RootNamespace>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
     <Authors>Alexandre Beloin (abeloin)</Authors>
     <Description>YetAnotherCloudProxy .Net / Proxy server to bypass Cloudflare protection.</Description>
     <PackageTags>YetAnotherCloudProxy, flaresolverr, flaresolver, cloudflare, solver, bypass, protection, solving, library, cloudflaresolver, delegatinghandler, recaptcha, captcha, javascript, challenge, utilities</PackageTags>
