@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>YetAnotherCloudProxySharp</id>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <authors>Alexandre Beloin (abeloin)</authors>
     <owners>Alexandre Beloin (abeloin)</owners>
     <description>YetAnotherCloudProxy .Net / Proxy server to bypass Cloudflare protection.</description>
